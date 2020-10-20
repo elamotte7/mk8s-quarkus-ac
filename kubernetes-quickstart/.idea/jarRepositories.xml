@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="sedona-php-release" />
+      <option name="name" value="Sedona PHP Release" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/php-release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-php-snapshot" />
+      <option name="name" value="Sedona PHP Snapshot" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/php-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-gradle-snapshot" />
+      <option name="name" value="Sedona Gradle Snapshot" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/gradle-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/java-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-java-snapshot" />
+      <option name="name" value="Sedona Java Snapshot" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/java-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-java-release" />
+      <option name="name" value="Sedona Java Release" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/java-release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-java-public" />
+      <option name="name" value="Sedona Java Public" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/java-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-gradle-release" />
+      <option name="name" value="Sedona Gradle Release" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/gradle-release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-redshift-release" />
+      <option name="name" value="Sedona Redshift Release" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/redshift-release" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sedona-redshift-snapshot" />
+      <option name="name" value="Sedona Redshift Snapshot" />
+      <option name="url" value="https://repo.cicd.sedona.fr/artifactory/redshift-snapshot" />
+    </remote-repository>
+  </component>
+</project>
