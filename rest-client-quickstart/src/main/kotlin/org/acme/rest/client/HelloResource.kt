@@ -17,4 +17,9 @@ class HelloResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     fun hello() = helloService.hello()
+
+    @GET
+    @Path("/quarkus")
+    @Produces(MediaType.TEXT_PLAIN)
+    fun helloBis() = "Hello Quarkus!"
 }

@@ -11,10 +11,10 @@ class HelloResourceTest {
     @Test
     fun testHelloEndpoint() {
         given()
-          .`when`().get("/greeting")
+          .`when`().get("/hello/quarkus")
           .then()
              .statusCode(200)
-             .body(`is`("hello"))
+             .body(`is`("Hello Quarkus!"))
     }
 
 }
