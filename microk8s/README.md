@@ -1,10 +1,210 @@
-# microk8s quickstart
+# GraalVM
+
+## Configuring
+
+Follow the intructions [here](https://quarkus.io/guides/building-native-image#configuring-graalvm)
+
+# Multipass
+
+Multipass provides a command line interface to launch, manage and generally fiddle about with instances of Linux.
+Our microk8s is deployed in a ubuntu vm, so we may need to access the vm.
+
+List the vm : 
+
+```shell script
+$ multipass list
+```
+
+output :
+ 
+```shell script
+ Name                    State             IPv4             Image
+ microk8s-vm             Running           192.168.64.2     Ubuntu 18.04 LTS
+```
+
+The multipass shell command will open a shell prompt on an instance.
+
+```shell script
+$ multipass shell microk8s-vm
+```
+
+output : 
+
+```shell script
+Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-118-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sat Oct 31 18:24:18 CET 2020
+
+  System load:  0.81               Processes:             176
+  Usage of /:   13.5% of 48.29GB   Users logged in:       1
+  Memory usage: 37%                IP address for enp0s2: 192.168.64.2
+  Swap usage:   0%
+
+ * Introducing self-healing high availability clustering for MicroK8s!
+   Super simple, hardened and opinionated Kubernetes for production.
+
+     https://microk8s.io/high-availability
+
+12 packages can be updated.
+0 updates are security updates.
+
+New release '20.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Sat Oct 31 18:08:21 2020 from 192.168.64.1
+ubuntu@microk8s-vm:~$ 
+```
+
+## Mount volume for multipass (because we want to work with local files)
+
+The recommended way to share data between your host and the instance is the mount command:
+
+```shell script
+$  multipass mount ~/dev/git/sedona/apero-code/mk8s-quarkus-ac/microk8s/ microk8s-vm:/microk8s
+```
+
+To unmount the volume
+
+```shell script
+$ multipass unmount microk8s-vm
+```
+
+# Microk8s
+
+## microk8s quickstart
 
 Install microk8s on mac OS : 
-- brew install ubuntu/microk8s/microk8s
-- microk8s start
-- microk8s stop
-- microk8s enable ingress registry storage dashboard dns istio
-- token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
-- microk8s kubectl -n kube-system describe secret $token
-- sudo microk8s kubectl config view --raw > $HOME/.kube/config
+
+```shell script
+$  brew install ubuntu/microk8s/microk8s
+```
+
+Start microk8s : 
+
+```shell script
+$ microk8s start
+```
+
+Enable Ingress, Registry, storage, dashboard, dns and Istio :
+
+```shell script
+$ microk8s enable ingress registry storage dashboard dns istio
+```
+
+Launch the k8s dashboard : 
+
+```shell script
+$ microk8s dashboard-proxy
+```
+
+output : 
+
+```shell script
+Checking if Dashboard is running.
+Dashboard will be available at https://192.168.64.2:10443
+Use the following token to login:
+eyJhbGciOiJSUzI1NiIsImtpZCI6IkpCT1EwcUhNajcwNGl6RnVWMlo0dXFjbE83N205M25tR2k0dUpKcG5CcVEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLXh3dGI5Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJkYmRkYzFjMS1kNzgzLTQzZGUtYmNjZi1iYjk0MjlkNGU0YzciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.mwVXowyf3k_UMQ7dol5YqoM5UeYoulBZHISa1t_in2HEXah0Ul4YWWxeMP_CjISi1TGVutURKM4p13PG88fv42-6c9SiGM_O_lw-aSU_n9oLCa-uzr8Hc_6DEA4SooJHdvZ_U82BH3CzwvC0A4-wxvNqqTpNxhQMi2Tva5aq3DtPYxeqTMQ8OX_6xdNpnF5nzsH3hO8FxbHDvo0zfWbbJSnI23rQgHzL_mUBFN_rFLu5C1nQ9EFZ5BHa4XpavlMwscIrZboKIR1zlz-rLX75liCZxlT15giNufujTymJU5-NJtUfQmLhQ5JGFjydYkCX_4oTw7Z7IBK0py3P5FWPdQ
+Forwarding from 0.0.0.0:10443 -> 8443
+Handling connection for 10443
+``
+
+
+Get the token to authenticate in the dashboard : 
+
+```shell script
+$ token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
+$ microk8s kubectl -n kube-system describe secret $token
+```
+
+To use native k8s command, add microk8s config to kubeconfig : 
+
+```shell script
+$ sudo microk8s kubectl config view --raw > $HOME/.kube/config
+```
+
+Stop microk8s : 
+
+```shell script
+$ microk8s stop
+```
+
+## namespace
+
+```shell script
+$ microk8s kubectl apply -f /microk8s/k8s/namespace/apero-code-ns.yaml
+```
+
+## configmap
+
+```shell script
+$ microk8s kubectl create -f /microk8s/k8s/config-map/grpc-client-configmap.yaml
+```
+
+```shell script
+$ microk8s kubectl create -f /microk8s/k8s/config-map/grpc-server-configmap.yaml
+```
+
+## Ingress
+
+```shell script
+$ microk8s kubectl apply -f /microk8s/k8s/ingress/k8s-quickstart-ingress.yaml
+```
+
+## Secret
+
+TODO
+
+## PostreSQL
+
+```shell script
+$ microk8s kubectl apply -f /microk8s/db/postgresql/postgresql-deployment.yaml
+```
+
+## k8s-quickstart
+
+To deploy the kubernetes quickstart to microk8s
+
+```shell script
+$ cd kubernetes-quickstart
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+# Istio
+
+## Gateway
+
+First of all generate client and server secret
+
+Follow the instructions [here](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)
+
+```shell script
+$ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -subj '/O=Sedona/CN=sedona.fr' -keyout sedona.fr.key -out sedona.fr.crt
+```
+
+```shell script
+$ openssl req -out k8s-quickstart.sedona.fr.csr -newkey rsa:2048 -nodes -keyout k8s-quickstart.sedona.fr.key -subj "/CN=k8s-quickstart.sedona.fr/O=Sedona solution"
+$ openssl x509 -req -days 365 -CA sedona.fr.crt -CAkey sedona.fr.key -set_serial 0 -in k8s-quickstart.sedona.fr.csr -out k8s-quickstart.sedona.fr.crt
+```
+
+```shell script
+$ kubectl create -n istio-system secret tls k8s-quickstart-credential --key=certs/k8s-quickstart.sedona.fr.key --cert=certs/k8s-quickstart.sedona.fr.crt
+```
+
+```shell script
+$ kubectl create -n istio-system secret tls k8s-quickstart-credential --key=k8s-quickstart.sedona.fr.key --cert=k8s-quickstart.sedona.fr.crt
+```
+
+
+
+
+
+
+
+
+
+

@@ -1,15 +1,19 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grpc-client-ingress
+  name: k8s-quickstart-ingress
+  namespace: quarkus-apero-code
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - http:
         paths:
-          - path: /hello
+          - path: /k8s-quickstart(/|$)(.*)
+            pathType: Prefix
             backend:
-              serviceName: grpc-client-k8s
-              servicePort: 8080
+              service:
+                name: kubernetes-quickstart
+                port:
+                  number: 2000
 

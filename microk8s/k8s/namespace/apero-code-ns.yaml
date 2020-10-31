@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: apero-codes
+  name: quarkus-apero-code

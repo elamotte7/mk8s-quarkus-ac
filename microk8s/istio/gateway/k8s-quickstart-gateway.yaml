@@ -36,4 +36,4 @@ spec:
         - destination:
             port:
               number: 8000
-            host: httpbin
+            host: kubernetes-quickstart
