@@ -76,6 +76,8 @@ $ multipass unmount microk8s-vm
 
 # Microk8s
 
+![Microk8s: The smallest, fastest Kubernetes](https://repository-images.githubusercontent.com/132732601/e3882d80-e367-11e9-8177-a6d5ec3eaff3)
+
 ## microk8s quickstart
 
 Install microk8s on mac OS : 
