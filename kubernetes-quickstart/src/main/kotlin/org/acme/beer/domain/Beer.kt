@@ -1,10 +1,12 @@
 package org.acme.beer.domain
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntity
+import javax.persistence.Cacheable
 import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "BEER_TABLE")
+@Cacheable
 data class Beer(
         @Column(name = "BEER_NAME", length = 40)
         var name: String = "",

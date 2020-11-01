@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
+  namespace: quarkus-apero-code
   labels:
     app: postgres
 data:
@@ -13,6 +14,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: postgres-secret
+  namespace: quarkus-apero-code
   labels:
     app: postgres
 data:
@@ -22,6 +24,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: postgres-pv-new
+  namespace: quarkus-apero-code
   labels:
     type: local
     app: postgres
@@ -38,6 +41,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: postgres-claim
+  namespace: quarkus-apero-code
   labels:
     app: postgres
 spec:
@@ -52,6 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
+  namespace: quarkus-apero-code
 spec:
   replicas: 1
   selector:
@@ -96,6 +101,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgres
+  namespace: quarkus-apero-code
   labels:
     app: postgres
 spec:
