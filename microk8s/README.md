@@ -1,10 +1,14 @@
 # GraalVM
 
+[![GraalVM: Run Programs Faster Anywhere ](https://www.graalvm.org/resources/img/graalvm.png)](https://www.graalvm.org/)
+
 ## Configuring
 
 Follow the intructions [here](https://quarkus.io/guides/building-native-image#configuring-graalvm)
 
 # Multipass
+
+[![Multipass: lightweight VM manager for Linux, Windows and macOS ](https://assets.ubuntu.com/v1/c87ec87a-Multipass-header-option_crop.png)](https://multipass.run/)
 
 Multipass provides a command line interface to launch, manage and generally fiddle about with instances of Linux.
 Our microk8s is deployed in a ubuntu vm, so we may need to access the vm.
@@ -76,7 +80,7 @@ $ multipass unmount microk8s-vm
 
 # Microk8s
 
-![Microk8s: The smallest, fastest Kubernetes](https://repository-images.githubusercontent.com/132732601/e3882d80-e367-11e9-8177-a6d5ec3eaff3)
+[![Microk8s: The smallest, fastest Kubernetes](https://repository-images.githubusercontent.com/132732601/e3882d80-e367-11e9-8177-a6d5ec3eaff3)](https://microk8s.io/)
 
 ## microk8s quickstart
 
@@ -169,6 +173,8 @@ $ microk8s kubectl apply -f /microk8s/db/postgresql/postgresql-deployment.yaml
 
 ## k8s-quickstart
 
+[![Quarkus](https://design.jboss.org/quarkus/logo/final/PNG/quarkus_logo_horizontal_rgb_1280px_default.png)](https://quarkus.io/)
+
 To deploy the kubernetes quickstart to microk8s
 
 ```shell script
@@ -177,6 +183,8 @@ $ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy
 ```
 
 # Istio
+
+[![Istio: Connect, secure, control, and observe services. ](https://avatars2.githubusercontent.com/u/23534644?s=280&v=4)](https://istio.io/)
 
 ## Gateway
 
