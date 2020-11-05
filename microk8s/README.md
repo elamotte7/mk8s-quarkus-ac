@@ -186,7 +186,24 @@ $ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy
 
 [![Istio: Connect, secure, control, and observe services. ](https://avatars2.githubusercontent.com/u/23534644?s=280&v=4)](https://istio.io/)
 
+```shell script
+$ microk8s kubectl label namespace quarkus-apero-code istio-injection=enabled
+```
+
+```shell script
+$ export INGRESS_PORT=$(microk8s kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+$ export SECURE_INGRESS_PORT=$(microk8s kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+$ export TCP_INGRESS_PORT=$(microk8s kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="tcp")].nodePort}')
+$ export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
+```
+
 ## Gateway
+
+```shell script
+$ microk8s kubectl apply -f /microk8s/istio/gateway/k8s-quickstart-gateway.yaml
+```
+
+### tls
 
 First of all generate client and server secret
 

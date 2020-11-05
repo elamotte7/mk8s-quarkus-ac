@@ -30,9 +30,3 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-#    - port:
-#        number: 2379 # to expose internal service via external port 2379
-#        name: mongo
-#        protocol: MONGO
-#      hosts:
-#        - "*"
