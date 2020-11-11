@@ -34,3 +34,6 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
+/mtls-go-example/
+/microk8s/istio/istio-ingressgateway.yaml
+/microk8s/k8s-quickstart.sedona.fr/
