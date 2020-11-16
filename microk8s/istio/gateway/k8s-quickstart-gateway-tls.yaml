@@ -23,8 +23,9 @@ spec:
         - '*'
       tls:
         mode: SIMPLE # enables HTTPS on this port
-        serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
-        privateKey: /etc/istio/ingressgateway-certs/tls.key
+        serverCertificate: /etc/istio/istio-ingressgateway-k8s-quickstart-certs/tls.crt
+        privateKey: /etc/istio/istio-ingressgateway-k8s-quickstart-certs/tls.key
+#        credentialName: secret/k8s-quickstart-credential
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -35,7 +36,7 @@ spec:
   hosts:
     - '*'
   gateways:
-    - quarkus-apero-code/k8s-quickstart-gateway
+    - k8s-quickstart-gateway
   http:
     - match:
         - uri:

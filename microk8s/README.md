@@ -1,3 +1,5 @@
+WIP
+
 # GraalVM
 
 [![GraalVM: Run Programs Faster Anywhere ](https://www.graalvm.org/resources/img/graalvm.png)](https://www.graalvm.org/)
@@ -23,6 +25,8 @@ Run the installer :
 ```shell script
 $  microk8s install
 ```
+
+Say yes to install multipass, and see multipass below to configure it properly
 
 Start microk8s : 
 
@@ -109,11 +113,50 @@ $ microk8s kubectl apply -f /microk8s/db/postgresql/postgresql-deployment.yaml
 
 [![Quarkus](https://design.jboss.org/quarkus/logo/final/PNG/quarkus_logo_horizontal_rgb_1280px_default.png)](https://quarkus.io/)
 
-To deploy the kubernetes quickstart to microk8s
+To deploy the kubernetes quickstart native image to microk8s
 
 ```shell script
 $ cd kubernetes-quickstart
 $ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+To deploy the kubernetes quickstart JVM image to microk8s
+
+```shell script
+$ cd kubernetes-quickstart
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+```
+
+## grpc-client-k8s
+
+To deploy the grpc client to microk8s
+
+```shell script
+$ cd grpc-client-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+or
+
+```shell script
+$ cd grpc-client-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+```
+
+## grpc-server-k8s
+
+To deploy the grpc client to microk8s
+
+```shell script
+$ cd grpc-server-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+or
+
+```shell script
+$ cd grpc-server-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
 ```
 
 # Multipass
@@ -226,18 +269,57 @@ $ openssl req -out k8s-quickstart.sedona.fr.csr -newkey rsa:2048 -nodes -keyout 
 $ openssl x509 -req -days 365 -CA sedona.fr.crt -CAkey sedona.fr.key -set_serial 0 -in k8s-quickstart.sedona.fr.csr -out k8s-quickstart.sedona.fr.crt
 ```
 
+#### Create secret for certificates
+
 ```shell script
-$ microk8s kubectl create -n quarkus-apero-code secret tls istio-ingressgateway-certs --key /microk8s/istio/certs/k8s-quickstart.sedona.fr.key --cert /microk8s/istio/certs/k8s-quickstart.sedona.fr.crt
+$ microk8s kubectl create -n istio-system secret tls istio-ingressgateway-k8s-quickstart-certs --key /microk8s/istio/certs/k8s-quickstart.sedona.fr.key --cert /microk8s/istio/certs/k8s-quickstart.sedona.fr.crt
 ```
+
+```shell script
+$ cat > gateway-patch.json <<EOF
+[{
+  "op": "add",
+  "path": "/spec/template/spec/containers/0/volumeMounts/0",
+  "value": {
+    "mountPath": "/etc/istio/istio-ingressgateway-k8s-quickstart-certs",
+    "name": "istio-ingressgateway-k8s-quickstart-certs",
+    "readOnly": true
+  }
+},
+{
+  "op": "add",
+  "path": "/spec/template/spec/volumes/0",
+  "value": {
+  "name": "istio-ingressgateway-k8s-quickstart-certs",
+    "secret": {
+      "secretName": "istio-ingressgateway-k8s-quickstart-certs",
+      "optional": true
+    }
+  }
+}]
+EOF
+```
+
+```shell script
+$ microk8s kubectl -n istio-system patch --type=json deploy istio-ingressgateway -p "$(cat gateway-patch.json)"
+```
+
+#### Deploy the ingress gateway
 
 ```shell script
 $ microk8s kubectl apply -f /microk8s/istio/gateway/k8s-quickstart-gateway-tls.yaml
 ```
 
+Test it 
+
 ```shell script
 curl -v -HHost:k8s-quickstart.sedona.fr --resolve "k8s-quickstart.sedona.fr:$SECURE_INGRESS_PORT:$INGRESS_HOST" --cacert istio/certs/sedona.fr.crt "https://k8s-quickstart.sedona.fr:$SECURE_INGRESS_PORT/hello"
 ```
 
+## Mutual TLS
+
+
+## Routing
 
 
 

@@ -1,32 +1,47 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: grpc-client-gateway
+  name: grpc-client-k8s-gateway
   namespace:
 spec:
   selector:
-    app: grpc-client-gateway-controller
+    istio: ingressgateway # use istio default ingress gateway
   servers:
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
-        - grpc-client.sedona.fr
-      tls:
-        httpsRedirect: true # sends 301 redirect for http requests
+        - '*'
+#      tls:
+#        httpsRedirect: true # sends 301 redirect for http requests
     - port:
         number: 443
-        name: https-443
+        name: https
         protocol: HTTPS
       hosts:
-        - grpc-client.sedona.fr
+        - '*'
       tls:
         mode: SIMPLE # enables HTTPS on this port
-        credentialName: grpc-client-secret # fetches certs from Kubernetes secret
-    - port:
-        number: 9080
-        name: http-wildcard
-        protocol: HTTP
-      hosts:
-        - "*"
+        serverCertificate: /etc/istio/istio-ingressgateway-grpc-client-k8s-certs/tls.crt
+        privateKey: /etc/istio/istio-ingressgateway-grpc-client-k8s-certs/tls.key
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grpc-client-k8s-vs
+  namespace: quarkus-apero-code
+spec:
+  hosts:
+    - '*'
+  gateways:
+    - grpc-client-k8s-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: grpc-client-k8s
+            port:
+              number: 2000
