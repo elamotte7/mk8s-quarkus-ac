@@ -147,6 +147,14 @@ $ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
 
 To deploy the grpc client to microk8s
 
+first deploy the config map
+
+```shell script
+$ microk8s kubectl apply -f /microk8s/k8s/config-map/grpc-client-k8s.yaml
+```
+
+then
+
 ```shell script
 $ cd grpc-server-k8s
 $ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true

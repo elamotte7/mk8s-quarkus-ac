@@ -4,6 +4,7 @@ import io.quarkus.grpc.runtime.annotations.GrpcService
 import io.smallrye.mutiny.Uni
 import org.acme.grpc.server.HelloRequest
 import org.acme.grpc.server.MutinyGreeterGrpc
+import org.eclipse.microprofile.config.inject.ConfigProperty
 import javax.inject.Inject
 import javax.ws.rs.GET
 import javax.ws.rs.Path
