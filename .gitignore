@@ -37,3 +37,6 @@ release.properties
 /mtls-go-example/
 /microk8s/istio/istio-ingressgateway.yaml
 /microk8s/k8s-quickstart.sedona.fr/
+/grpc-server-k8s/.env
+/grpc-client-k8s/.env
+/kubernetes-quickstart/.env
