@@ -6,4 +6,4 @@ metadata:
   namespace: quarkus-apero-code
 data:
   GRPC_CLIENT_HELLO_SERVICE_HOST: "grpc-server-k8s"
-  GRPC_CLIENT_HELLO_SERVICE_PORT: "9000"
+  GRPC_CLIENT_HELLO_SERVICE_PORT: "3001"
