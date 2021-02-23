@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: grps-client-ingress
+  name: grpc-client-ingress
   namespace: quarkus-apero-code
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -9,11 +9,11 @@ spec:
   rules:
     - http:
         paths:
-          - path: /grpc-client
+          - path: /grpc-client-k8s(/|$)(.*)
             pathType: Prefix
             backend:
               service:
-                name: grps-client-k8s
+                name: grpc-client-k8s
                 port:
                   number: 4000
 

@@ -1,5 +1,3 @@
-WIP
-
 # GraalVM
 
 [![GraalVM: Run Programs Faster Anywhere ](https://www.graalvm.org/resources/img/graalvm.png)](https://www.graalvm.org/)
@@ -77,111 +75,27 @@ Stop microk8s :
 $ microk8s stop
 ```
 
-## namespace
+Removes microk8s : 
 
 ```shell script
-$ microk8s kubectl apply -f /microk8s/k8s/namespace/apero-code-ns.yaml
+$ microk8s uninstall
 ```
 
-## configmap
-
-```shell script
-$ microk8s kubectl create -f /microk8s/k8s/config-map/grpc-client-configmap.yaml
-```
-
-```shell script
-$ microk8s kubectl create -f /microk8s/k8s/config-map/grpc-server-configmap.yaml
-```
-
-## Ingress
-
-```shell script
-$ microk8s kubectl apply -f /microk8s/k8s/ingress/k8s-quickstart-ingress.yaml
-```
-
-## Secret
-
-TODO
-
-## PostreSQL
-
-```shell script
-$ microk8s kubectl apply -f /microk8s/db/postgresql/postgresql-deployment.yaml
-```
-
-## k8s-quickstart
-
-[![Quarkus](https://design.jboss.org/quarkus/logo/final/PNG/quarkus_logo_horizontal_rgb_1280px_default.png)](https://quarkus.io/)
-
-To deploy the kubernetes quickstart native image to microk8s
-
-```shell script
-$ cd kubernetes-quickstart
-$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
-```
-
-To deploy the kubernetes quickstart JVM image to microk8s
-
-```shell script
-$ cd kubernetes-quickstart
-$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
-```
-
-## grpc-client-k8s
-
-To deploy the grpc client to microk8s
-
-```shell script
-$ cd grpc-client-k8s
-$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
-```
-
-or
-
-```shell script
-$ cd grpc-client-k8s
-$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
-```
-
-## grpc-server-k8s
-
-To deploy the grpc client to microk8s
-
-first deploy the config map
-
-```shell script
-$ microk8s kubectl apply -f /microk8s/k8s/config-map/grpc-client-k8s.yaml
-```
-
-then
-
-```shell script
-$ cd grpc-server-k8s
-$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
-```
-
-or
-
-```shell script
-$ cd grpc-server-k8s
-$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
-```
-
-# Multipass
+## Multipass
 
 [![Multipass: lightweight VM manager for Linux, Windows and macOS ](https://assets.ubuntu.com/v1/c87ec87a-Multipass-header-option_crop.png)](https://multipass.run/)
 
 Multipass provides a command line interface to launch, manage and generally fiddle about with instances of Linux.
 Our microk8s is deployed in a ubuntu vm, so we may need to access the vm.
 
-List the vm : 
+List the vm :
 
 ```shell script
 $ multipass list
 ```
 
 output :
- 
+
 ```shell script
  Name                    State             IPv4             Image
  microk8s-vm             Running           192.168.64.2     Ubuntu 18.04 LTS
@@ -193,7 +107,7 @@ The multipass shell command will open a shell prompt on an instance.
 $ multipass shell microk8s-vm
 ```
 
-output : 
+output :
 
 ```shell script
 Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-118-generic x86_64)
@@ -239,6 +153,98 @@ To unmount the volume
 $ multipass unmount microk8s-vm
 ```
 
+# Create k8s project
+
+## namespace
+
+```shell script
+$ microk8s kubectl apply -f microk8s/k8s/namespace/apero-code-ns.yaml
+```
+
+## configmap
+
+```shell script
+$ microk8s kubectl create -f microk8s/k8s/config-map/grpc-client-configmap.yaml
+```
+
+```shell script
+$ microk8s kubectl create -f microk8s/k8s/config-map/grpc-server-configmap.yaml
+```
+
+## Ingress
+
+```shell script
+$ microk8s kubectl apply -f microk8s/k8s/ingress/k8s-quickstart-ingress.yaml
+```
+
+## Secret
+
+TODO
+
+## PostreSQL
+
+```shell script
+$ microk8s kubectl apply -f microk8s/db/postgresql/postgresql-deployment.yaml
+```
+
+## k8s-quickstart
+
+[![Quarkus](https://design.jboss.org/quarkus/logo/final/PNG/quarkus_logo_horizontal_rgb_1280px_default.png)](https://quarkus.io/)
+
+To deploy the kubernetes quickstart native image to microk8s
+
+```shell script
+$ cd kubernetes-quickstart
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+To deploy the kubernetes quickstart JVM image to microk8s
+
+```shell script
+$ cd kubernetes-quickstart
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+```
+
+## grpc-client-k8s
+
+To deploy the grpc client to microk8s
+
+```shell script
+$ cd grpc-client-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+or
+
+```shell script
+$ cd grpc-client-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+```
+
+## grpc-server-k8s
+
+To deploy the grpc client to microk8s
+
+first deploy the config map
+
+```shell script
+$ microk8s kubectl apply -f microk8s/k8s/config-map/grpc-client-k8s-configmap.yaml
+```
+
+then
+
+```shell script
+$ cd grpc-server-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+```
+
+or
+
+```shell script
+$ cd grpc-server-k8s
+$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+```
+
 # Istio
 
 [![Istio: Connect, secure, control, and observe services. ](https://avatars2.githubusercontent.com/u/23534644?s=280&v=4)](https://istio.io/)
@@ -254,12 +260,26 @@ $ export TCP_INGRESS_PORT=$(microk8s kubectl -n istio-system get service istio-i
 $ export INGRESS_HOST=$(microk8s kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
 ```
 
+## Kiali
+
+launch Kiali
+
+```shell script
+$ microk8s istioctl dashboard kiali
+```
+
+Port forward
+
+```shell script
+$ microk8s kubectl port-forward svc/kiali 20001:20001 -n istio-system
+```
+
 ## Gateway
 
 ### No tls
 
 ```shell script
-$ microk8s kubectl apply -f /microk8s/istio/gateway/k8s-quickstart-gateway.yaml
+$ microk8s kubectl apply -f microk8s/istio/gateway/k8s-quickstart-gateway.yaml
 ```
 
 ### TLS ingress gateway for a single host
@@ -315,7 +335,7 @@ $ microk8s kubectl -n istio-system patch --type=json deploy istio-ingressgateway
 #### Deploy the ingress gateway
 
 ```shell script
-$ microk8s kubectl apply -f /microk8s/istio/gateway/k8s-quickstart-gateway-tls.yaml
+$ microk8s kubectl apply -f microk8s/istio/gateway/k8s-quickstart-gateway-tls.yaml
 ```
 
 Test it 
