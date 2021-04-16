@@ -195,14 +195,14 @@ To deploy the kubernetes quickstart native image to microk8s
 
 ```shell script
 $ cd kubernetes-quickstart
-$ ./mvnw package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
+$ ./mvnw clean package -Dquarkus.profile=microk8s -Pnative -Dquarkus.kubernetes.deploy=true
 ```
 
 To deploy the kubernetes quickstart JVM image to microk8s
 
 ```shell script
 $ cd kubernetes-quickstart
-$ ./mvnw package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
+$ ./mvnw clean package -Dquarkus.profile=microk8s -Dquarkus.kubernetes.deploy=true
 ```
 
 ## grpc-client-k8s
