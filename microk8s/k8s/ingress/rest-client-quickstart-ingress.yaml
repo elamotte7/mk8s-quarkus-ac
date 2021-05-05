@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rest-client-quickstart-ingress
+  namespace: quarkus-apero-code
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /rest-client-quickstart(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: rest-client-quickstart
+                port:
+                  number: 2001
+
