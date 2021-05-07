@@ -10,6 +10,6 @@ class GreetingResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    fun hello() = "hello from service hello!"
+    fun hello() = "hello from service kubernetes-quickstart!"
 
 }

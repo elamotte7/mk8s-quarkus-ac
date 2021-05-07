@@ -13,6 +13,6 @@ class GreetingResourceTest {
                 .`when`()["/hello"]
                 .then()
                 .statusCode(200)
-                .body(CoreMatchers.`is`("hello from service hello!"))
+                .body(CoreMatchers.`is`("hello from service kubernetes-quickstart!"))
     }
 }

@@ -4,6 +4,7 @@ import org.acme.beer.domain.Beer
 import org.acme.beer.repository.BeerRepository
 import javax.inject.Inject
 import javax.transaction.Transactional
+import javax.validation.Validator
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
@@ -12,8 +13,11 @@ import javax.ws.rs.core.Response
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 class BeerResource @Inject constructor(
-        private val beerRepository: BeerRepository
+    private val beerRepository: BeerRepository
 ) {
+
+    @Inject
+    lateinit var validator: Validator
 
     @GET
     fun beers(): List<Beer> = beerRepository.findAll().list()
@@ -34,10 +38,12 @@ class BeerResource @Inject constructor(
     @Transactional
     fun update(@PathParam("id") id: Long, beer: Beer): Response {
         val entity = beerRepository.findById(id)
-                ?: throw WebApplicationException("Beer with id of $id does not exist.", 404)
-        beerRepository.update("update from BEER_TABLE set BEER_NAME = ?1, " +
-                "BEER_COLOR = ?2, BEER_COUNTRY = ?3, BEER_PRODUCER = ?4 where id = ?5",
-                beer.name, beer.color, beer.country, beer.producer, id)
+            ?: throw WebApplicationException("Beer with id of $id does not exist.", 404)
+        beerRepository.update(
+            "update from BEER_TABLE set BEER_NAME = ?1, " +
+                    "BEER_COLOR = ?2, BEER_COUNTRY = ?3, BEER_PRODUCER = ?4 where id = ?5",
+            beer.name, beer.color, beer.country, beer.producer, id
+        )
 
         return Response.ok(entity).build()
     }
