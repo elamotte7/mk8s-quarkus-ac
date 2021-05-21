@@ -1,22 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: k8s-quickstart-ingress
-  namespace: quarkus-apero-code
+  name: keycloak-ingress
+  namespace: keycloak
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-#    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: k8s-quickstart.sedona.fr
+    - host: keycloak.sedona.fr
       http:
         paths:
-#          - path: /k8s-quickstart(/|$)(.*)
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: kubernetes-quickstart
+                name: keycloak
                 port:
-                  number: 2000
-
+                  number: 8080

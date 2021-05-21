@@ -9,7 +9,8 @@ spec:
   rules:
     - http:
         paths:
-          - path: /rest-client-quickstart(/|$)(.*)
+          - host: hello-world.info
+            path: /rest-client-quickstart(/|$)(.*)
             pathType: Prefix
             backend:
               service:

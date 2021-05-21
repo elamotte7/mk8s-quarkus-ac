@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  namespace: keycloak
+  labels:
+    app: keycloak
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: keycloak
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:13.0.0
+          livenessProbe:
+            #          httpGet:
+            #            path: /health
+            #            port: 8080
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+          env:
+            # remove these paramters i you want to use embedded DB
+            - name: MYSQL_DATABASE
+              value: "keycloak"
+            - name: MYSQL_USERNAME
+              value: "keycloak"
+            - name: MYSQL_PASSWORD
+              value: "keycloak"
+            - name: MYSQL_PORT_3306_TCP_ADDR
+              value: "percona"
+            - name: MYSQL_PORT_3306_TCP_PORT
+              value: "3306"
+            # first start only, testing only
+            - name: KEYCLOAK_USER
+              value: "admin"
+            - name: KEYCLOAK_PASSWORD
+              value: "admin"
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+            - name: management
+              containerPort: 9090
+            - name: jgroups-tcp
+              containerPort: 7600
+            - name: jgroups-tcp-fd
+              containerPort: 57600
+            - name: jgroups-udp
+              containerPort: 55200
+              protocol: UDP
+            - name: jgroups-udp-mc
+              containerPort: 45688
+              protocol: UDP
+            - name: jgroups-udp-fd
+              containerPort: 54200
+              protocol: UDP
+            - name: modcluster
+              containerPort: 23364
+            - name: modcluster-udp
+              containerPort: 23364
+              protocol: UDP
+            - name: txn-recovery-ev
+              containerPort: 4712
+            - name: txn-status-mgr
+              containerPort: 4713
+          # readinessProbe:
+          #   httpGet:
+          #     path: /auth/realms/master
+          #     port: 8080
+          #   initialDelaySeconds: 60
