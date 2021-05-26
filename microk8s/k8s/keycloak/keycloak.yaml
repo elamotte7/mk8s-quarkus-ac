@@ -38,17 +38,17 @@ spec:
               port: 8080
             initialDelaySeconds: 60
           env:
-            # remove these paramters i you want to use embedded DB
-            - name: MYSQL_DATABASE
-              value: "keycloak"
-            - name: MYSQL_USERNAME
-              value: "keycloak"
-            - name: MYSQL_PASSWORD
-              value: "keycloak"
-            - name: MYSQL_PORT_3306_TCP_ADDR
-              value: "percona"
-            - name: MYSQL_PORT_3306_TCP_PORT
-              value: "3306"
+            # use these parameters if you want to use embedded DB
+#            - name: MYSQL_DATABASE
+#              value: "keycloak"
+#            - name: MYSQL_USERNAME
+#              value: "keycloak"
+#            - name: MYSQL_PASSWORD
+#              value: "keycloak"
+#            - name: MYSQL_PORT_3306_TCP_ADDR
+#              value: "percona"
+#            - name: MYSQL_PORT_3306_TCP_PORT
+#              value: "3306"
             # first start only, testing only
             - name: KEYCLOAK_USER
               value: "admin"
@@ -56,6 +56,26 @@ spec:
               value: "admin"
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
+            # use these parameters if you want to use an external postgreSQL
+            - name: DB_VENDOR
+              value: POSTGRES
+            - name: DB_ADDR
+              value: postgres
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: postgres-keycloak-config
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: postgres-keycloak-config
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: postgres-keycloak-secret
           ports:
             - name: http
               containerPort: 8080
