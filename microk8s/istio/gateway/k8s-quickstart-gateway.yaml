@@ -21,7 +21,7 @@ metadata:
   namespace: quarkus-apero-code
 spec:
   hosts:
-   - '*'
+    - '*'
   gateways:
     - k8s-quickstart-gateway
   http:
