@@ -300,7 +300,7 @@ $ openssl x509 -req -days 365 -CA sedona.fr.crt -CAkey sedona.fr.key -set_serial
 #### Create secret for certificates
 
 ```shell script
-$ microk8s kubectl create -n istio-system secret tls istio-ingressgateway-k8s-quickstart-certs --key /microk8s/istio/certs/k8s-quickstart.sedona.fr.key --cert /microk8s/istio/certs/k8s-quickstart.sedona.fr.crt
+$ microk8s kubectl create -n istio-system secret tls istio-ingressgateway-k8s-quickstart-certs --key microk8s/istio/certs/k8s-quickstart.sedona.fr.key --cert microk8s/istio/certs/k8s-quickstart.sedona.fr.crt
 ```
 
 ```shell script

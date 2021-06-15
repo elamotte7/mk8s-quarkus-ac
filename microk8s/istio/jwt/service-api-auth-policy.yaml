@@ -1,0 +1,17 @@
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
+metadata:
+  name: "jwt-policy"
+  namespace: quarkus-apero-code
+spec:
+#  targets:
+#    - name: kubernetes-quickstart
+  peers:
+    - mtls: {}
+  origins:
+    - jwt:
+        # audiences:
+        # - client-services
+        issuer: "http://keycloak/auth/realms/istio"
+        jwksUri: "http://keycloak/auth/realms/istio/protocol/openid-connect/certs"
+  principalBinding: USE_ORIGIN

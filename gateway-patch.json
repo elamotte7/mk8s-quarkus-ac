@@ -1,0 +1,20 @@
+[{
+  "op": "add",
+  "path": "/spec/template/spec/containers/0/volumeMounts/0",
+  "value": {
+    "mountPath": "/etc/istio/istio-ingressgateway-k8s-quickstart-certs",
+    "name": "istio-ingressgateway-k8s-quickstart-certs",
+    "readOnly": true
+  }
+},
+{
+  "op": "add",
+  "path": "/spec/template/spec/volumes/0",
+  "value": {
+  "name": "istio-ingressgateway-k8s-quickstart-certs",
+    "secret": {
+      "secretName": "istio-ingressgateway-k8s-quickstart-certs",
+      "optional": true
+    }
+  }
+}]

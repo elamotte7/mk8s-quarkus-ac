@@ -1,0 +1,33 @@
+#apiVersion: networking.istio.io/v1alpha3
+#kind: VirtualService
+#metadata:
+#  name: k8s-quickstart-vs
+#  namespace: quarkus-apero-code
+#spec:
+#  hosts:
+#    - '*'
+#  gateways:
+#    - k8s-quickstart-gateway
+#  http:
+#    - match:
+#        - uri:
+#            prefix: /
+#      route:
+#        - destination:
+#            host: kubernetes-quickstart
+#            port:
+#              number: 2000
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: k8s-quickstart-vs
+  namespace: quarkus-apero-code
+spec:
+  hosts:
+    - kubernetes-quickstart
+  http:
+    - route:
+        - destination:
+            host: kubernetes-quickstart
+            subset: v1
+          weight: 100
