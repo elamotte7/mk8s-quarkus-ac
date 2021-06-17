@@ -39,6 +39,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-container-image-docker</artifactId>
         </dependency>
+        <!-- Hibernate related -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm-panache-kotlin</artifactId>
@@ -47,6 +48,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
+        <!-- driver jdbc related -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
@@ -54,6 +56,11 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
+        </dependency>
+        <!-- open-api related -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
         <!-- Test -->
         <dependency>
